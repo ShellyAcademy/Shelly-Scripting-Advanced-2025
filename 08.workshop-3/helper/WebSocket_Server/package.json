@@ -1,0 +1,21 @@
+{
+  "name": "shelly-ows-server",
+  "version": "1.0.0",
+  "description": "All-in-one Shelly Outbound WebSocket Server",
+  "main": "shelly_ws_server.js",
+  "scripts": {
+    "start": "node shelly_ws_server.js",
+    "dev": "node shelly_ws_server.js"
+  },
+  "keywords": [
+    "shelly",
+    "websocket",
+    "iot",
+    "home-automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.14.2"
+  }
+}

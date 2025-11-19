@@ -1,0 +1,31 @@
+1 - define connection point
+
+2 - create an alert
+2.1 - alert name: Low WiFi Signal
+2.2: 
+------------------------------------------------------------------
+from(bucket: "iot-data")
+  |> range(start: -5m)
+  |> filter(fn: (r) => r["_measurement"] == "shelly_telemetry")
+  |> filter(fn: (r) => r["_field"] == "wifiStrength")
+  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)
+  |> last()
+------------------------------------------------------------------
+2.3. Conditions:
+WHEN Last OF QUERY IS BELOW -90
+
+3. Add Folder and Labels
+RoleStore
+
+4. Set evaluation behavior
+Connectivity
+
+Pending period - 2m
+
+Keep firing for - 0s
+
+5. Configure created contact point
+
+6. Configure Notification Message
+6.1. Summary: Low WiFi Signal detected on {{ $labels.device_id }}
+6.2. Description: The WiFi strength for device '{{ $labels.device_id }}' has dropped to {{ $values.B.Value }} dBm. This is below the threshold of -90 dBm. Connection loss is imminent.

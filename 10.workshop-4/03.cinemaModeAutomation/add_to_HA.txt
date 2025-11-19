@@ -1,0 +1,31 @@
+
+Should be added to configuration.yaml
+
+rest_command:
+  video_playing:
+    url: "http://192.168.10.52/rpc/Boolean.Set?id=200&value=true"
+    content_type: 'application/json'
+  video_pause_stop:
+    url: "http://192.168.10.52/rpc/Boolean.Set?id=200&value=false"
+    content_type: 'application/json'
+	
+After these actions are added successfully, go to Settings -> Automations & Scenes
+	- Create new automation and Edit in YAML
+	- from UI you can do it by selecting the device and in ACTION -> PERFORM ACTION
+	
+""
+
+alias: Sends the 'video_playing' HTTP command
+description: Sends the 'video_playing' HTTP command
+triggers:
+  - entity_id: media_player.living_room_tv
+    to: playing
+    trigger: state
+conditions: []
+actions:
+  - data: {}
+    action: rest_command.video_playing
+mode: single
+
+""
+	

@@ -1,0 +1,11 @@
+import "math"
+
+from(bucket: "iot-data")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "shelly_telemetry")
+  |> filter(fn: (r) => r["topic"] == "shellypresence-ccba97eb5b20/events/rpc")
+  |> filter(fn: (r) => r["_field"] == "params_presencezone:201_num_objects")
+  |> filter(fn: (r) => r["host"] == "c496054e7800")
+  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
+  |> map(fn: (r) => ({ r with _value: math.ceil(x: r._value) }))
+  |> yield(name: "mean")
